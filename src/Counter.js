@@ -10,40 +10,57 @@ const Counter = () => {
         return { count: state.count + 1 };
       case "DECREMENT":
         return { count: state.count - 1 };
+      case "TOGGLE":
+        return { isToggled: !state.isToggled };
       default:
         return state;
     }
   };
 
-  const initialState = { count: 0 };
+  const initialState = { count: 0, isToggled: false };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <div className="counter-app">
-      <h1>Counter app using reducer</h1>
-      <p>Count: {state.count}</p>
-      <div className="">
-        {/* dispatch function is used to send action to the reducer function, takes an object as an argument.
+    <>
+      <div className="counter-app">
+        <h1>Counter app using reducer</h1>
+        <p>Count: {state.count}</p>
+        <div className="">
+          {/* dispatch function is used to send action to the reducer function, takes an object as an argument.
         this object has a type as key that indicates the type of action to be performed */}
-        <button
-          className="increment-button"
-          onClick={() => {
-            dispatch({ type: "INCREMENT" });
-          }}
-        >
-          Increment
-        </button>
-        <button
-          className="decrement-button"
-          onClick={() => {
-            dispatch({ type: "DECREMENT" });
-          }}
-        >
-          Decrement
-        </button>
+          <button
+            className="increment-button"
+            onClick={() => {
+              dispatch({ type: "INCREMENT" });
+            }}
+          >
+            Increment
+          </button>
+          <button
+            className="decrement-button"
+            onClick={() => {
+              dispatch({ type: "DECREMENT" });
+            }}
+          >
+            Decrement
+          </button>
+        </div>
       </div>
-    </div>
+      <div className="checkbox-css">
+        <label>
+          <input
+            name="checkbox"
+            type="checkbox"
+            checked={state?.isToggled}
+            onChange={() => {
+              dispatch({ type: "TOGGLE" });
+            }}
+          />
+          {state?.isToggled ? "ON" : "OFF"}
+        </label>
+      </div>
+    </>
   );
 };
 
